@@ -7,7 +7,7 @@ import {Image} from 'react-native';
  *
  * This is a simple image loader which can take a source image URL
  * and a fallback image URL.
- * In case of source image fails to load,
+ * In case of source image failing to load,
  * this will automatically fall back to the fallback image.
  */
 class ImageLoader extends React.PureComponent {
@@ -95,8 +95,8 @@ class ImageLoader extends React.PureComponent {
   }
 
   /**
-   * Render the logic of the container
-   * @return {JSX} What to be rendered
+   * Render the component
+   * @return {JSX}
    */
   render() {
     // Image source object
