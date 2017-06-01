@@ -25,7 +25,7 @@
   },
   "rules": {
     "new-cap": 0,
-    "max-len": [2, 100],
+    "max-len": [2, 80],
     "no-undef": 2,
     "linebreak-style": 0,
     "quote-props": 0,

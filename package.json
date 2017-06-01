@@ -3,7 +3,12 @@
   "description": "Image loader component for React Native apps",
   "license": "MIT",
   "version": "0.0.1",
-  "keywords": "react-native, image-loader, fallback",
+  "keywords": [
+    "react-native",
+    "react-native-component",
+    "image-loader",
+    "fallback"
+  ],
   "author": {
     "name": "Mohomed Thahsan",
     "email": "mthahzan@gmail.com"
@@ -22,6 +27,11 @@
     "eslint": "^3.19.0",
     "eslint-config-google": "^0.7.1",
     "eslint-plugin-react": "^7.0.1",
-    "eslint-plugin-react-native": "^2.3.2"
+    "eslint-plugin-react-native": "^2.3.2",
+    "react": "16.0.0-alpha.6",
+    "react-native": "0.44.2"
+  },
+  "dependencies": {
+    "prop-types": "^15.5.10"
   }
 }
