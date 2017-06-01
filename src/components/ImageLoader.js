@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 /**
  * ImageLoaderComponent class
  */
-class ImageLoaderComponent extends React.Component {
+class ImageLoaderComponent extends React.PureComponent {
 
   /**
    * Image loader component constructor
@@ -35,20 +35,6 @@ class ImageLoaderComponent extends React.Component {
         imageSource: nextProps.source,
       };
     });
-  }
-
-  /**
-   * Let React know if a component's output is not affected by the current
-   * change in state or props
-   * @param  {object}   nextProps Next props
-   * @param  {object}   nextState Next state
-   * @return {Boolean}            TRUE if the component should be updated
-   */
-  shouldComponentUpdate(nextProps, nextState) {
-    const propsChanged = false;
-    const stateChanged = this.state.imageSource !== nextState.imageSource;
-
-    return propsChanged || stateChanged;
   }
 
   /**
@@ -96,7 +82,7 @@ class ImageLoaderComponent extends React.Component {
 }
 
 /**
- * prop types of Image Loader component
+ * Prop types of Image Loader component
  * @type {Object}
  */
 ImageLoaderComponent.propTypes = {
@@ -107,7 +93,7 @@ ImageLoaderComponent.propTypes = {
 };
 
 /**
- * prop types of Image Loader component
+ * Default props of Image Loader component
  * @type {Object}
  */
 ImageLoaderComponent.defaultProps = {
