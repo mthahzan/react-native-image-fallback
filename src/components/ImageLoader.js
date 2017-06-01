@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 /**
- * ImageLoaderComponent class
+ * ImageLoader class
  */
-class ImageLoaderComponent extends React.PureComponent {
+class ImageLoader extends React.PureComponent {
 
   /**
    * Image loader component constructor
@@ -85,7 +85,7 @@ class ImageLoaderComponent extends React.PureComponent {
  * Prop types of Image Loader component
  * @type {Object}
  */
-ImageLoaderComponent.propTypes = {
+ImageLoader.propTypes = {
   fallback: PropTypes.string,
   onError: PropTypes.func,
   onSuccess: PropTypes.func,
@@ -96,11 +96,11 @@ ImageLoaderComponent.propTypes = {
  * Default props of Image Loader component
  * @type {Object}
  */
-ImageLoaderComponent.defaultProps = {
+ImageLoader.defaultProps = {
   fallback: null,
   onError: () => {},
   onSuccess: () => {},
 };
 
 // Export the class
-export default ImageLoaderComponent;
+export default ImageLoader;
