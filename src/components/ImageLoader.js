@@ -1,8 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {Image} from 'react-native';
 
 /**
- * ImageLoader class
+ * ImageLoader component.
+ *
+ * This is a simple image loader which can take a source image URL
+ * and a fallback image URL.
+ * In case of source image fails to load,
+ * this will automatically fall back to the fallback image.
  */
 class ImageLoader extends React.PureComponent {
 
@@ -47,6 +53,14 @@ class ImageLoader extends React.PureComponent {
   }
 
   /**
+   * Handle image load start
+   */
+  handleImageLoadStart() {
+    // Notify the user what image we are trying to load
+    this.props.onLoadStart(this.state.imageSource);
+  }
+
+  /**
    * Handle image load error
    */
   handleImageLoadSuccess() {
@@ -73,11 +87,33 @@ class ImageLoader extends React.PureComponent {
   }
 
   /**
+   * Handle image load error
+   */
+  handleImageLoadEnd() {
+    // Notify the user what image is loaded
+    this.props.onLoadEnd(this.state.imageSource);
+  }
+
+  /**
    * Render the logic of the container
    * @return {JSX} What to be rendered
    */
   render() {
-    return null;
+    // Image source object
+    const source = {
+      uri: this.state.imageSource,
+    };
+
+    return (
+      <Image
+          onError={this.handleImageLoadError}
+          onLoad={this.handleImageLoadSuccess}
+          onLoadEnd={this.handleImageLoadEnd}
+          onLoadStart={this.handleImageLoadStart}
+          source={source}
+          style={this.props.style}
+      />
+    );
   }
 }
 
@@ -88,8 +124,11 @@ class ImageLoader extends React.PureComponent {
 ImageLoader.propTypes = {
   fallback: PropTypes.string,
   onError: PropTypes.func,
+  onLoadEnd: PropTypes.func,
+  onLoadStart: PropTypes.func,
   onSuccess: PropTypes.func,
   source: PropTypes.string.isRequired,
+  style: PropTypes.object,
 };
 
 /**
@@ -99,7 +138,10 @@ ImageLoader.propTypes = {
 ImageLoader.defaultProps = {
   fallback: null,
   onError: () => {},
+  onLoadStart: () => {},
+  onLoadEnd: () => {},
   onSuccess: () => {},
+  style: null,
 };
 
 // Export the class
