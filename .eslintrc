@@ -1,0 +1,41 @@
+{
+  "extends": ["eslint:recommended", "plugin:react-native/all", "plugin:react/all", "google"],
+  "globals": {
+    "require": false
+  },
+  "plugins": [
+    "react",
+    "react-native"
+  ],
+  "env": {
+    "es6": true,
+    "node": true,
+    "browser": true
+  },
+  "ecmaFeatures": {
+    "jsx": true,
+    "modules": true
+  },
+  "parser": "babel-eslint",
+  "parserOptions": {
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "rules": {
+    "new-cap": 0,
+    "max-len": [2, 100],
+    "no-undef": 2,
+    "linebreak-style": 0,
+    "quote-props": 0,
+    "indent": [2, 2],
+
+    "react/forbid-component-props": 0,
+    "react/forbid-prop-types": 0,
+    "react/jsx-indent": [2, 2],
+    "react/jsx-no-literals": 0,
+    "react/jsx-filename-extension": 0,
+    "react/no-set-state": 0
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "name": "ImageLoader",
+  "description": "Image loader component for React Native apps",
+  "license": "MIT",
+  "version": "0.0.1",
+  "keywords": "react-native, image-loader, fallback",
+  "author": {
+    "name": "Mohomed Thahsan",
+    "email": "mthahzan@gmail.com"
+  },
+  "homepage": "https://github.com/mthahzan/react-native-image-loader",
+  "bugs": {
+    "url": "https://github.com/mthahzan/react-native-image-loader/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/mthahzan/react-native-image-loader.git"
+  },
+  "devDependencies": {
+    "babel-eslint": "^7.2.3",
+    "babel-preset-react-native": "^1.9.2",
+    "eslint": "^3.19.0",
+    "eslint-config-google": "^0.7.1",
+    "eslint-plugin-react": "^7.0.1",
+    "eslint-plugin-react-native": "^2.3.2"
+  }
+}
