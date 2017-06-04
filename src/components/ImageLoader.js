@@ -6,9 +6,9 @@ import {Image} from 'react-native';
  * ImageLoader component.
  *
  * This is a simple image loader which can take a source image URL
- * and a fallback image URL.
+ * and fallback image URL(s).
  * In case of source image failing to load,
- * this will automatically fall back to the fallback image.
+ * this will automatically fall back to the fallback image(s).
  */
 class ImageLoader extends React.PureComponent {
 
@@ -19,13 +19,18 @@ class ImageLoader extends React.PureComponent {
   constructor(props) {
     super(props);
 
+    // Bind the context to required other functions
+    this.bindContextToCustomFunction(this);
+
     // Set initial state
     this.state = {
-      imageSource: props.source,
-    };
+      // Get all the image sources given as an array
+      imageSources: this.getAllImageSources(props),
 
-    // Bind the context to required other functions
-    this.bindCustomFunction(this);
+      // Keeping track of what we've done already
+      // We keep the index of what we are currently trying to display
+      currentImageIndex: 0,
+    };
   }
 
   /**
@@ -33,12 +38,16 @@ class ImageLoader extends React.PureComponent {
    * @param  {object} nextProps New props
    */
   componentWillReceiveProps(nextProps) {
+    // Get the imagesources into an array
+    const imageSources = this.getAllImageSources(nextProps);
+
     this.setState((state) => {
       return {
         ...state,
 
         // Set the new state variables
-        imageSource: nextProps.source,
+        imageSources,
+        currentImageIndex: 0,
       };
     });
   }
@@ -47,9 +56,33 @@ class ImageLoader extends React.PureComponent {
    * Handles the input change event
    * @param  {context} context Context of the React class
    */
-  bindCustomFunction(context) {
+  bindContextToCustomFunction(context) {
+    this.getAllImageSources = this.getAllImageSources.bind(context);
     this.handleImageLoadSuccess = this.handleImageLoadSuccess.bind(context);
     this.handleImageLoadError = this.handleImageLoadError.bind(context);
+  }
+
+  /**
+   * Get all the image sources from the props
+   * @return {Array}        Array of image sources
+   */
+  getAllImageSources() {
+    // Create a new array
+    const imageSources = [];
+
+    // Concat the source if available
+    if (this.props.source) {
+      imageSources.concat(this.props.source);
+    }
+
+    // Concat the fallback(s) if they are given
+    if (this.props.fallback) {
+      imageSources.concat(this.props.fallback);
+    }
+
+    // Return the filtered out image sources
+    // No null should be present here
+    return imageSources.filter((imageSource) => imageSource);
   }
 
   /**
@@ -57,7 +90,9 @@ class ImageLoader extends React.PureComponent {
    */
   handleImageLoadStart() {
     // Notify the user what image we are trying to load
-    this.props.onLoadStart(this.state.imageSource);
+    this.props.onLoadStart(
+      this.state.imageSources[this.state.currentImageIndex]
+    );
   }
 
   /**
@@ -65,33 +100,44 @@ class ImageLoader extends React.PureComponent {
    */
   handleImageLoadSuccess() {
     // Notify the user what image is loaded
-    this.props.onSuccess(this.state.imageSource);
+    this.props.onSuccess(
+      this.state.imageSources[this.state.currentImageIndex]
+    );
   }
 
   /**
    * Handle image load error
    */
   handleImageLoadError() {
-    // Update the state to switch to fallback image
-    this.setState((state) => {
-      return {
-        ...state,
+    // Get the image sources and current index
+    const {imageSources, currentImageIndex} = this.state;
 
-        // Set the new state variables
-        imageSource: this.props.fallback,
-      };
-    });
+    // Check if we have run out of sources
+    if (currentImageIndex >= imageSources.length) {
+      // That's it, we have done everything we can
+      this.props.onError();
+    } else {
+      // We still have options
+      // Update the state to switch to fallback image
+      this.setState((state) => {
+        return {
+          ...state,
 
-    // Notify load error to user
-    this.props.onError();
+          // Set the new state variables
+          currentImageIndex: currentImageIndex + 1,
+        };
+      });
+    }
   }
 
   /**
-   * Handle image load error
+   * Handle image load end
    */
   handleImageLoadEnd() {
     // Notify the user what image is loaded
-    this.props.onLoadEnd(this.state.imageSource);
+    this.props.onLoadEnd(
+      this.state.imageSources[this.state.currentImageIndex]
+    );
   }
 
   /**
@@ -99,19 +145,33 @@ class ImageLoader extends React.PureComponent {
    * @return {JSX}
    */
   render() {
-    // Image source object
-    const source = {
-      uri: this.state.imageSource,
-    };
+    // Image source
+    const imageSource = this.state.imageSources[this.state.currentImageIndex];
+    let source = null;
+
+    // Figure out what type of image we are dealing with
+    switch (typeof imageSource) {
+    case 'string':
+      source = {
+        uri: imageSource,
+      };
+
+      break;
+    case 'number':
+      // Opaque type returned by require('./image.jpg')
+      source = imageSource;
+
+      break;
+    }
 
     return (
       <Image
+          {...this.props}
           onError={this.handleImageLoadError}
           onLoad={this.handleImageLoadSuccess}
           onLoadEnd={this.handleImageLoadEnd}
           onLoadStart={this.handleImageLoadStart}
           source={source}
-          style={this.props.style}
       />
     );
   }
@@ -122,13 +182,31 @@ class ImageLoader extends React.PureComponent {
  * @type {Object}
  */
 ImageLoader.propTypes = {
-  fallback: PropTypes.string,
+  // Fallback can be a string or an array of strings
+  fallback: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.arrayOf(PropTypes.string),
+
+    // Opaque type returned by require('./image.jpg')
+    PropTypes.number,
+    PropTypes.arrayOf(PropTypes.number),
+  ]),
+
   onError: PropTypes.func,
   onLoadEnd: PropTypes.func,
   onLoadStart: PropTypes.func,
   onSuccess: PropTypes.func,
-  source: PropTypes.string.isRequired,
-  style: PropTypes.object,
+
+  // We can accept an array of sources,
+  // but having alist of fallbacks and sources doesn't sound right to me.
+  // If required, this can be easily facilitated in the future.
+  // Just change the PropType, no change to the logic should be required
+  source: PropTypes.oneOfType([
+    PropTypes.string,
+
+    // Opaque type returned by require('./image.jpg')
+    PropTypes.number,
+  ]).isRequired,
 };
 
 /**
@@ -141,7 +219,6 @@ ImageLoader.defaultProps = {
   onLoadStart: () => {},
   onLoadEnd: () => {},
   onSuccess: () => {},
-  style: null,
 };
 
 // Export the class

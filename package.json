@@ -1,6 +1,7 @@
 {
   "name": "ImageLoader",
   "description": "Image loader component for React Native apps",
+  "main": "index.js",
   "license": "MIT",
   "version": "0.0.1",
   "keywords": [
