@@ -186,12 +186,17 @@ class ImageLoader extends React.PureComponent {
 ImageLoader.propTypes = {
   // Fallback can be a string or an array of strings
   fallback: PropTypes.oneOfType([
+    // String image URL
     PropTypes.string,
-    PropTypes.arrayOf(PropTypes.string),
 
     // Opaque type returned by require('./image.jpg')
     PropTypes.number,
-    PropTypes.arrayOf(PropTypes.number),
+
+    // Or an array of either (even mixed)
+    PropTypes.arrayOf(PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.number,
+    ])),
   ]),
 
   onError: PropTypes.func,
@@ -200,7 +205,7 @@ ImageLoader.propTypes = {
   onSuccess: PropTypes.func,
 
   // We can accept an array of sources,
-  // but having alist of fallbacks and sources doesn't sound right to me.
+  // but having a list of fallbacks and sources doesn't sound right to me.
   // If required, this can be easily facilitated in the future.
   // Just change the PropType, no change to the logic should be required
   source: PropTypes.oneOfType([
