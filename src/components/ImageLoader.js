@@ -58,8 +58,10 @@ class ImageLoader extends React.PureComponent {
    */
   bindContextToCustomFunction(context) {
     this.getAllImageSources = this.getAllImageSources.bind(context);
+    this.handleImageLoadStart = this.handleImageLoadStart.bind(context);
     this.handleImageLoadSuccess = this.handleImageLoadSuccess.bind(context);
     this.handleImageLoadError = this.handleImageLoadError.bind(context);
+    this.handleImageLoadEnd = this.handleImageLoadEnd.bind(context);
   }
 
   /**
@@ -68,16 +70,16 @@ class ImageLoader extends React.PureComponent {
    */
   getAllImageSources() {
     // Create a new array
-    const imageSources = [];
+    let imageSources = [];
 
     // Concat the source if available
     if (this.props.source) {
-      imageSources.concat(this.props.source);
+      imageSources = imageSources.concat(this.props.source);
     }
 
     // Concat the fallback(s) if they are given
     if (this.props.fallback) {
-      imageSources.concat(this.props.fallback);
+      imageSources = imageSources.concat(this.props.fallback);
     }
 
     // Return the filtered out image sources
