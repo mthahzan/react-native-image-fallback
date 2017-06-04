@@ -1,6 +1,6 @@
 {
-  "name": "ImageLoader",
-  "description": "Image loader component for React Native apps",
+  "name": "react-native-image-fallback",
+  "description": "Image loader component with fallback options for React Native apps",
   "main": "index.js",
   "license": "MIT",
   "version": "0.0.1",
