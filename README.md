@@ -43,3 +43,10 @@ This is basically a React Native `Image`. So all the `<Image />` props will work
 - `onLoadEnd` - Invoked when load either succeeds or fails. Accepts a callback function with the first parameter being the image in question.
 - `onSuccess` - Invoked when the component successfully loads an image. Accepts a callback function with the first parameter being the loaded image.
 - `onError` - Invoked when all the given images fail to load.
+
+## Contributing
+
+Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests to us.
+
+## License
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details

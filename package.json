@@ -14,13 +14,13 @@
     "name": "Mohomed Thahsan",
     "email": "mthahzan@gmail.com"
   },
-  "homepage": "https://github.com/mthahzan/react-native-image-loader",
+  "homepage": "https://github.com/mthahzan/react-native-image-fallback",
   "bugs": {
-    "url": "https://github.com/mthahzan/react-native-image-loader/issues"
+    "url": "https://github.com/mthahzan/react-native-image-fallback/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/mthahzan/react-native-image-loader.git"
+    "url": "git://github.com/mthahzan/react-native-image-fallback.git"
   },
   "devDependencies": {
     "babel-eslint": "^7.2.3",
