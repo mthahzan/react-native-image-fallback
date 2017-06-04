@@ -14,7 +14,4 @@ Always write a clear log message for your commits. One-line messages are fine fo
 
 ## Coding conventions
 
-See the .eslintrc file. Basically that's all.
-
-Thanks,
-Mohomed Thahsan
+See the [.eslintrc](.eslintrc) file. Basically that's all.
