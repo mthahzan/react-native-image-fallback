@@ -84,7 +84,8 @@ class ImageLoader extends React.PureComponent {
 
     // Return the filtered out image sources
     // No null should be present here
-    return imageSources.filter((imageSource) => imageSource);
+    // Also, please no duplicates
+    return [...new Set(imageSources.filter((imageSource) => imageSource))];
   }
 
   /**
@@ -154,13 +155,15 @@ class ImageLoader extends React.PureComponent {
     // Figure out what type of image we are dealing with
     switch (typeof imageSource) {
     case 'string':
+      // If a string is given, we assume it's a URI
       source = {
         uri: imageSource,
       };
 
       break;
     case 'number':
-      // Opaque type returned by require('./image.jpg')
+      // If a number is given,
+      // we assume it's an opaque type returned by require('./image.jpg')
       source = imageSource;
 
       break;
