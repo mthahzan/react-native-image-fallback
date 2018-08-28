@@ -68,18 +68,18 @@ class ImageLoader extends React.PureComponent {
    * Get all the image sources from the props
    * @return {Array}        Array of image sources
    */
-  getAllImageSources() {
+  getAllImageSources(props) {
     // Create a new array
     let imageSources = [];
 
     // Concat the source if available
-    if (this.props.source) {
-      imageSources = imageSources.concat(this.props.source);
+    if (props.source) {
+      imageSources = imageSources.concat(props.source);
     }
 
     // Concat the fallback(s) if they are given
-    if (this.props.fallback) {
-      imageSources = imageSources.concat(this.props.fallback);
+    if (props.fallback) {
+      imageSources = imageSources.concat(props.fallback);
     }
 
     // Return the filtered out image sources
