@@ -1,16 +1,19 @@
 {
-  "extends": ["eslint:recommended", "plugin:react-native/all", "plugin:react/all", "google"],
+  "extends": ["eslint:recommended", "plugin:react-native/all", "plugin:react/all", "google", "plugin:jest/recommended"],
   "globals": {
     "require": false
   },
   "plugins": [
     "react",
-    "react-native"
+    "babel",
+    "react-native",
+    "jest"
   ],
   "env": {
     "es6": true,
     "node": true,
-    "browser": true
+    "browser": true,
+    "jest": true
   },
   "ecmaFeatures": {
     "jsx": true,
@@ -24,18 +27,43 @@
     }
   },
   "rules": {
+    "indent": ["error", 2],
     "new-cap": 0,
-    "max-len": [2, 80],
+    "max-len": [2, {"code": 120, "ignoreTrailingComments": true}],
     "no-undef": 2,
-    "linebreak-style": 0,
-    "quote-props": 0,
-    "indent": [2, 2],
-
+    "require-jsdoc": 0,
+    "prefer-const": "error",
+    "arrow-spacing": "error",
+    "padding-line-between-statements": [
+      "error",
+      {"blankLine": "always", "prev": "*", "next": "return"}
+    ],
+    "jsx-quotes": "error",
+    "space-infix-ops": ["error", {"int32Hint": true}],
+    "space-unary-ops": [
+      1, {
+        "words": true,
+        "nonwords": false,
+        "overrides": {
+          "new": false,
+          "++": true
+        }
+    }],
+    "no-multiple-empty-lines": ["error", {"max": 1, "maxBOF": 1}],
     "react/forbid-component-props": 0,
     "react/forbid-prop-types": 0,
     "react/jsx-indent": [2, 2],
+    "react/jsx-indent-props": [2, 2],
     "react/jsx-no-literals": 0,
     "react/jsx-filename-extension": 0,
-    "react/no-set-state": 0
+    "react/no-set-state": 0,
+    "react/prefer-stateless-function": 0,
+    "react/no-multi-comp": [2, { "ignoreStateless": true }],
+    "react/jsx-one-expression-per-line": 0,
+    "react/destructuring-assignment": 0,
+    "no-invalid-this": 0,
+    "babel/no-invalid-this": 2,
+    "react/no-access-state-in-setstate": 0,
+    "react/prop-types": [2]
   }
 }

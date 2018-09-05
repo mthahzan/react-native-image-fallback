@@ -11,7 +11,6 @@ import {Image} from 'react-native';
  * this will automatically fall back to the fallback image(s).
  */
 class ImageLoader extends React.PureComponent {
-
   /**
    * Image loader component constructor
    * @param {object} props Props passed to the component
@@ -53,22 +52,11 @@ class ImageLoader extends React.PureComponent {
   }
 
   /**
-   * Handles the input change event
-   * @param  {context} context Context of the React class
-   */
-  bindContextToCustomFunction(context) {
-    this.getAllImageSources = this.getAllImageSources.bind(context);
-    this.handleImageLoadStart = this.handleImageLoadStart.bind(context);
-    this.handleImageLoadSuccess = this.handleImageLoadSuccess.bind(context);
-    this.handleImageLoadError = this.handleImageLoadError.bind(context);
-    this.handleImageLoadEnd = this.handleImageLoadEnd.bind(context);
-  }
-
-  /**
    * Get all the image sources from the props
+   * @param  {any}   props  The props to get the images from
    * @return {Array}        Array of image sources
    */
-  getAllImageSources(props) {
+  getAllImageSources = (props) => {
     // Create a new array
     let imageSources = [];
 
@@ -91,7 +79,7 @@ class ImageLoader extends React.PureComponent {
   /**
    * Handle image load start
    */
-  handleImageLoadStart() {
+  handleImageLoadStart = () => {
     // Notify the user what image we are trying to load
     this.props.onLoadStart(
       this.state.imageSources[this.state.currentImageIndex]
@@ -101,7 +89,7 @@ class ImageLoader extends React.PureComponent {
   /**
    * Handle image load error
    */
-  handleImageLoadSuccess() {
+  handleImageLoadSuccess = () => {
     // Notify the user what image is loaded
     this.props.onSuccess(
       this.state.imageSources[this.state.currentImageIndex]
@@ -111,7 +99,7 @@ class ImageLoader extends React.PureComponent {
   /**
    * Handle image load error
    */
-  handleImageLoadError() {
+  handleImageLoadError = () => {
     // Get the image sources and current index
     const {imageSources, currentImageIndex} = this.state;
 
@@ -136,7 +124,7 @@ class ImageLoader extends React.PureComponent {
   /**
    * Handle image load end
    */
-  handleImageLoadEnd() {
+  handleImageLoadEnd = () => {
     // Notify the user what image is loaded
     this.props.onLoadEnd(
       this.state.imageSources[this.state.currentImageIndex]
@@ -171,12 +159,12 @@ class ImageLoader extends React.PureComponent {
 
     return (
       <Image
-          {...this.props}
-          onError={this.handleImageLoadError}
-          onLoad={this.handleImageLoadSuccess}
-          onLoadEnd={this.handleImageLoadEnd}
-          onLoadStart={this.handleImageLoadStart}
-          source={source}
+        {...this.props}
+        onError={this.handleImageLoadError}
+        onLoad={this.handleImageLoadSuccess}
+        onLoadEnd={this.handleImageLoadEnd}
+        onLoadStart={this.handleImageLoadStart}
+        source={source}
       />
     );
   }
@@ -226,8 +214,8 @@ ImageLoader.propTypes = {
 ImageLoader.defaultProps = {
   fallback: null,
   onError: () => {},
-  onLoadStart: () => {},
   onLoadEnd: () => {},
+  onLoadStart: () => {},
   onSuccess: () => {},
 };
 
