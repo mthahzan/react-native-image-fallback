@@ -1,69 +1,41 @@
 {
-  "extends": ["eslint:recommended", "plugin:react-native/all", "plugin:react/all", "google", "plugin:jest/recommended"],
-  "globals": {
-    "require": false
-  },
-  "plugins": [
-    "react",
-    "babel",
+  "name": "react-native-image-fallback",
+  "description": "Image loader component with fallback options for React Native apps",
+  "main": "index.js",
+  "license": "MIT",
+  "version": "0.0.5",
+  "keywords": [
     "react-native",
-    "jest"
+    "react-native-component",
+    "image-loader",
+    "fallback"
   ],
-  "env": {
-    "es6": true,
-    "node": true,
-    "browser": true,
-    "jest": true
+  "author": {
+    "name": "Mohomed Thahsan",
+    "email": "mthahzan@gmail.com"
   },
-  "ecmaFeatures": {
-    "jsx": true,
-    "modules": true
+  "homepage": "https://github.com/mthahzan/react-native-image-fallback",
+  "bugs": {
+    "url": "https://github.com/mthahzan/react-native-image-fallback/issues"
   },
-  "parser": "babel-eslint",
-  "parserOptions": {
-    "sourceType": "module",
-    "ecmaFeatures": {
-      "jsx": true
-    }
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/mthahzan/react-native-image-fallback.git"
   },
-  "rules": {
-    "indent": ["error", 2],
-    "new-cap": 0,
-    "max-len": [2, {"code": 120, "ignoreTrailingComments": true}],
-    "no-undef": 2,
-    "require-jsdoc": 0,
-    "prefer-const": "error",
-    "arrow-spacing": "error",
-    "padding-line-between-statements": [
-      "error",
-      {"blankLine": "always", "prev": "*", "next": "return"}
-    ],
-    "jsx-quotes": "error",
-    "space-infix-ops": ["error", {"int32Hint": true}],
-    "space-unary-ops": [
-      1, {
-        "words": true,
-        "nonwords": false,
-        "overrides": {
-          "new": false,
-          "++": true
-        }
-    }],
-    "no-multiple-empty-lines": ["error", {"max": 1, "maxBOF": 1}],
-    "react/forbid-component-props": 0,
-    "react/forbid-prop-types": 0,
-    "react/jsx-indent": [2, 2],
-    "react/jsx-indent-props": [2, 2],
-    "react/jsx-no-literals": 0,
-    "react/jsx-filename-extension": 0,
-    "react/no-set-state": 0,
-    "react/prefer-stateless-function": 0,
-    "react/no-multi-comp": [2, { "ignoreStateless": true }],
-    "react/jsx-one-expression-per-line": 0,
-    "react/destructuring-assignment": 0,
-    "no-invalid-this": 0,
-    "babel/no-invalid-this": 2,
-    "react/no-access-state-in-setstate": 0,
-    "react/prop-types": [2]
+  "devDependencies": {
+    "babel-eslint": "8.2.6",
+    "babel-jest": "23.4.2",
+    "babel-preset-react-native": "^5",
+    "eslint": "5.3.0",
+    "eslint-config-google": "0.9.1",
+    "eslint-plugin-babel": "5.1.0",
+    "eslint-plugin-jest": "21.21.0",
+    "eslint-plugin-react": "7.11.1",
+    "eslint-plugin-react-native": "3.2.1",
+    "react": "16.0.0-alpha.6",
+    "react-native": "0.44.2"
+  },
+  "dependencies": {
+    "prop-types": "^15.5.10"
   }
 }
