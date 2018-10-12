@@ -18,9 +18,6 @@ class ImageLoader extends React.PureComponent {
   constructor(props) {
     super(props);
 
-    // Bind the context to required other functions
-    this.bindContextToCustomFunction(this);
-
     // Set initial state
     this.state = {
       // Get all the image sources given as an array
