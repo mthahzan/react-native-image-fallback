@@ -3,7 +3,7 @@
   "description": "Image loader component with fallback options for React Native apps",
   "main": "index.js",
   "license": "MIT",
-  "version": "0.0.6",
+  "version": "0.1.0",
   "keywords": [
     "react-native",
     "react-native-component",
@@ -37,5 +37,8 @@
   },
   "dependencies": {
     "prop-types": "^15.5.10"
+  },
+  "peerDependencies": {
+    "react": "^15.0.0 || ^16.0.0"
   }
 }

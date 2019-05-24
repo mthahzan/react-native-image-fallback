@@ -29,23 +29,36 @@ class ImageLoader extends React.PureComponent {
     };
   }
 
+  // TODO: Remove deprecated method
   /**
    * Invoked before a mounted component receives new props
    * @param  {object} nextProps New props
    */
   componentWillReceiveProps(nextProps) {
-    // Get the imagesources into an array
-    const imageSources = this.getAllImageSources(nextProps);
+    this.resolveImageSourcesChange(nextProps);
+  }
 
-    this.setState((state) => {
-      return {
-        ...state,
+  /**
+   * Identifies a change in props and resets the fallback process.
+   * We rely on the user to not change the references to possible arrays here.
+   * @param {object} nextProps New props
+   */
+  resolveImageSourcesChange = (nextProps) => {
+    const sourceChanged = this.props.source !== nextProps.source;
+    const fallbackChanged = this.props.fallback !== nextProps.fallback;
 
-        // Set the new state variables
-        imageSources,
-        currentImageIndex: 0,
-      };
-    });
+    if (sourceChanged || fallbackChanged) {
+      // Get the imagesources into an array
+      const imageSources = this.getAllImageSources(nextProps);
+
+      this.setState((state) => {
+        return {
+          // Set the new state variables
+          imageSources,
+          currentImageIndex: 0, // Reset the trying index
+        };
+      });
+    }
   }
 
   /**
@@ -135,6 +148,7 @@ class ImageLoader extends React.PureComponent {
   render() {
     // Image source
     const imageSource = this.state.imageSources[this.state.currentImageIndex];
+    const ImageComponent = this.props.component || Image;
     let source = null;
 
     // Figure out what type of image we are dealing with
@@ -155,7 +169,7 @@ class ImageLoader extends React.PureComponent {
     }
 
     return (
-      <Image
+      <ImageComponent
         {...this.props}
         onError={this.handleImageLoadError}
         onLoad={this.handleImageLoadSuccess}
@@ -172,6 +186,9 @@ class ImageLoader extends React.PureComponent {
  * @type {Object}
  */
 ImageLoader.propTypes = {
+  // Custom component to be used instead of react-native Image component
+  // Defaults to React Native Image component
+  component: PropTypes.element,
   // Fallback can be a string or an array of strings
   fallback: PropTypes.oneOfType([
     // String image URL
@@ -209,6 +226,7 @@ ImageLoader.propTypes = {
  * @type {Object}
  */
 ImageLoader.defaultProps = {
+  component: Image,
   fallback: null,
   onError: () => {},
   onLoadEnd: () => {},
