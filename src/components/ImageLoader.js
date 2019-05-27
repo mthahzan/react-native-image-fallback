@@ -188,7 +188,8 @@ class ImageLoader extends React.PureComponent {
 ImageLoader.propTypes = {
   // Custom component to be used instead of react-native Image component
   // Defaults to React Native Image component
-  component: PropTypes.element,
+  component: PropTypes.node,
+
   // Fallback can be a string or an array of strings
   fallback: PropTypes.oneOfType([
     // String image URL
