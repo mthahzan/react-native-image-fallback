@@ -24,7 +24,7 @@
   },
   "devDependencies": {
     "babel-eslint": "8.2.6",
-    "babel-jest": "23.4.2",
+    "babel-jest": "24.8.0",
     "babel-preset-react-native": "^5",
     "eslint": "5.3.0",
     "eslint-config-google": "0.9.1",
