@@ -227,7 +227,7 @@ ImageLoader.propTypes = {
  * @type {Object}
  */
 ImageLoader.defaultProps = {
-  component: Image,
+  // component: Image, // This results in "Invalid prop component / expected ReactNode error
   fallback: null,
   onError: () => {},
   onLoadEnd: () => {},
