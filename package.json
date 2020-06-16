@@ -23,7 +23,8 @@
     "url": "git://github.com/mthahzan/react-native-image-fallback.git"
   },
   "scripts": {
-    "analyze": "yarn eslint src/"
+    "analyze": "eslint src/",
+    "shipit": "np"
   },
   "devDependencies": {
     "@babel/core": "^7.10.2",
@@ -37,6 +38,7 @@
     "eslint-plugin-jest": "23.13.2",
     "eslint-plugin-react": "^7.20.0",
     "eslint-plugin-react-native": "^3.8.1",
+    "np": "^6.2.4",
     "react": "16.11.0",
     "react-native": "0.62.2"
   },
