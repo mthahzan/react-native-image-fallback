@@ -12,6 +12,60 @@ import {Image} from 'react-native';
  */
 class ImageLoader extends React.PureComponent {
   /**
+   * Prop types of Image Loader component
+   * @type {Object}
+   */
+  static propTypes = {
+    // Custom component to be used instead of react-native Image component
+    // Defaults to React Native Image component
+    // eslint-disable-next-line react/require-default-props
+    component: PropTypes.node,
+
+    // Fallback can be a string or an array of strings
+    fallback: PropTypes.oneOfType([
+      // String image URL
+      PropTypes.string,
+
+      // Opaque type returned by require('./image.jpg')
+      PropTypes.number,
+
+      // Or an array of either (even mixed)
+      PropTypes.arrayOf(
+        PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+      ),
+    ]),
+
+    onError: PropTypes.func,
+    onLoadEnd: PropTypes.func,
+    onLoadStart: PropTypes.func,
+    onSuccess: PropTypes.func,
+
+    // We can accept an array of sources,
+    // but having a list of fallbacks and sources doesn't sound right to me.
+    // If required, this can be easily facilitated in the future.
+    // Just change the PropType, no change to the logic should be required
+    source: PropTypes.oneOfType([
+      PropTypes.string,
+
+      // Opaque type returned by require('./image.jpg')
+      PropTypes.number,
+    ]).isRequired,
+  };
+
+  /**
+   * Default props of Image Loader component
+   * @type {Object}
+   */
+  static defaultProps = {
+    // component: Image, // This results in "Invalid prop component / expected ReactNode error
+    fallback: null,
+    onError: () => {},
+    onLoadEnd: () => {},
+    onLoadStart: () => {},
+    onSuccess: () => {},
+  };
+
+  /**
    * Image loader component constructor
    * @param {object} props Props passed to the component
    */
@@ -29,36 +83,36 @@ class ImageLoader extends React.PureComponent {
     };
   }
 
-  // TODO: Remove deprecated method
   /**
    * Invoked before a mounted component receives new props
-   * @param  {object} nextProps New props
-   */
-  componentWillReceiveProps(nextProps) {
-    this.resolveImageSourcesChange(nextProps);
-  }
-
-  /**
+   *
    * Identifies a change in props and resets the fallback process.
    * We rely on the user to not change the references to possible arrays here.
-   * @param {object} nextProps New props
+   *
+   * @param  {object} nextProps New props
+   * @param  {object} state current state
+   * @return {object} state derived from props, or null
    */
-  resolveImageSourcesChange = (nextProps) => {
-    const sourceChanged = this.props.source !== nextProps.source;
-    const fallbackChanged = this.props.fallback !== nextProps.fallback;
+  static getDerivedStateFromProps(nextProps, state) {
+    if (!state || !state.source || !state.fallback) {
+      return null;
+    }
+
+    const sourceChanged = state.source !== nextProps.source;
+    const fallbackChanged = state.fallback !== nextProps.fallback;
 
     if (sourceChanged || fallbackChanged) {
       // Get the imagesources into an array
       const imageSources = this.getAllImageSources(nextProps);
 
-      this.setState((state) => {
-        return {
-          // Set the new state variables
-          imageSources,
-          currentImageIndex: 0, // Reset the trying index
-        };
-      });
+      return {
+        // Set the new state variables
+        imageSources,
+        currentImageIndex: 0, // Reset the trying index
+      };
     }
+
+    return null;
   }
 
   /**
@@ -84,7 +138,7 @@ class ImageLoader extends React.PureComponent {
     // No null should be present here
     // Also, please no duplicates
     return [...new Set(imageSources.filter((imageSource) => imageSource))];
-  }
+  };
 
   /**
    * Handle image load start
@@ -94,17 +148,15 @@ class ImageLoader extends React.PureComponent {
     this.props.onLoadStart(
       this.state.imageSources[this.state.currentImageIndex]
     );
-  }
+  };
 
   /**
    * Handle image load error
    */
   handleImageLoadSuccess = () => {
     // Notify the user what image is loaded
-    this.props.onSuccess(
-      this.state.imageSources[this.state.currentImageIndex]
-    );
-  }
+    this.props.onSuccess(this.state.imageSources[this.state.currentImageIndex]);
+  };
 
   /**
    * Handle image load error
@@ -129,17 +181,15 @@ class ImageLoader extends React.PureComponent {
         };
       });
     }
-  }
+  };
 
   /**
    * Handle image load end
    */
   handleImageLoadEnd = () => {
     // Notify the user what image is loaded
-    this.props.onLoadEnd(
-      this.state.imageSources[this.state.currentImageIndex]
-    );
-  }
+    this.props.onLoadEnd(this.state.imageSources[this.state.currentImageIndex]);
+  };
 
   /**
    * Render the component
@@ -153,19 +203,19 @@ class ImageLoader extends React.PureComponent {
 
     // Figure out what type of image we are dealing with
     switch (typeof imageSource) {
-    case 'string':
-      // If a string is given, we assume it's a URI
-      source = {
-        uri: imageSource,
-      };
+      case 'string':
+        // If a string is given, we assume it's a URI
+        source = {
+          uri: imageSource,
+        };
 
-      break;
-    case 'number':
-      // If a number is given,
-      // we assume it's an opaque type returned by require('./image.jpg')
-      source = imageSource;
+        break;
+      case 'number':
+        // If a number is given,
+        // we assume it's an opaque type returned by require('./image.jpg')
+        source = imageSource;
 
-      break;
+        break;
     }
 
     return (
@@ -180,60 +230,6 @@ class ImageLoader extends React.PureComponent {
     );
   }
 }
-
-/**
- * Prop types of Image Loader component
- * @type {Object}
- */
-ImageLoader.propTypes = {
-  // Custom component to be used instead of react-native Image component
-  // Defaults to React Native Image component
-  component: PropTypes.node,
-
-  // Fallback can be a string or an array of strings
-  fallback: PropTypes.oneOfType([
-    // String image URL
-    PropTypes.string,
-
-    // Opaque type returned by require('./image.jpg')
-    PropTypes.number,
-
-    // Or an array of either (even mixed)
-    PropTypes.arrayOf(PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.number,
-    ])),
-  ]),
-
-  onError: PropTypes.func,
-  onLoadEnd: PropTypes.func,
-  onLoadStart: PropTypes.func,
-  onSuccess: PropTypes.func,
-
-  // We can accept an array of sources,
-  // but having a list of fallbacks and sources doesn't sound right to me.
-  // If required, this can be easily facilitated in the future.
-  // Just change the PropType, no change to the logic should be required
-  source: PropTypes.oneOfType([
-    PropTypes.string,
-
-    // Opaque type returned by require('./image.jpg')
-    PropTypes.number,
-  ]).isRequired,
-};
-
-/**
- * Default props of Image Loader component
- * @type {Object}
- */
-ImageLoader.defaultProps = {
-  component: Image,
-  fallback: null,
-  onError: () => {},
-  onLoadEnd: () => {},
-  onLoadStart: () => {},
-  onSuccess: () => {},
-};
 
 // Export the class
 export default ImageLoader;
