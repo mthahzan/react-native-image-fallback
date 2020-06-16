@@ -29,36 +29,36 @@ class ImageLoader extends React.PureComponent {
     };
   }
 
-  // TODO: Remove deprecated method
   /**
    * Invoked before a mounted component receives new props
-   * @param  {object} nextProps New props
-   */
-  componentWillReceiveProps(nextProps) {
-    this.resolveImageSourcesChange(nextProps);
-  }
-
-  /**
+   *
    * Identifies a change in props and resets the fallback process.
    * We rely on the user to not change the references to possible arrays here.
-   * @param {object} nextProps New props
+   *
+   * @param  {object} nextProps New props
+   * @param  {object} state current state
+   * @return {object} state derived from props, or null
    */
-  resolveImageSourcesChange = (nextProps) => {
-    const sourceChanged = this.props.source !== nextProps.source;
-    const fallbackChanged = this.props.fallback !== nextProps.fallback;
+  static getDerivedStateFromProps(nextProps, state) {
+    if (!state || !state.source || !state.fallback) {
+      return null;
+    }
+
+    const sourceChanged = state.source !== nextProps.source;
+    const fallbackChanged = state.fallback !== nextProps.fallback;
 
     if (sourceChanged || fallbackChanged) {
       // Get the imagesources into an array
       const imageSources = this.getAllImageSources(nextProps);
 
-      this.setState((state) => {
-        return {
-          // Set the new state variables
-          imageSources,
-          currentImageIndex: 0, // Reset the trying index
-        };
-      });
+      return {
+        // Set the new state variables
+        imageSources,
+        currentImageIndex: 0, // Reset the trying index
+      };
     }
+
+    return null;
   }
 
   /**
