@@ -3,7 +3,7 @@
   "description": "Image loader component with fallback options for React Native apps",
   "main": "index.js",
   "license": "MIT",
-  "version": "0.1.1",
+  "version": "1.0.0",
   "keywords": [
     "react-native",
     "react-native-component",
