@@ -80,6 +80,10 @@ class ImageLoader extends React.PureComponent {
       // Keeping track of what we've done already
       // We keep the index of what we are currently trying to display
       currentImageIndex: 0,
+
+      // Stored for comparison with future props
+      source: props.source,
+      fallback: props.fallback
     };
   }
 
@@ -109,6 +113,8 @@ class ImageLoader extends React.PureComponent {
         // Set the new state variables
         imageSources,
         currentImageIndex: 0, // Reset the trying index
+        source: nextProps.source,
+        fallback: nextProps.fallback
       };
     }
 
