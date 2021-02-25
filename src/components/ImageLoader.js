@@ -75,11 +75,15 @@ class ImageLoader extends React.PureComponent {
     // Set initial state
     this.state = {
       // Get all the image sources given as an array
-      imageSources: this.getAllImageSources(props),
+      imageSources: ImageLoader.getAllImageSources(props),
 
       // Keeping track of what we've done already
       // We keep the index of what we are currently trying to display
       currentImageIndex: 0,
+
+      // Stored for comparison with future props
+      source: props.source,
+      fallback: props.fallback
     };
   }
 
@@ -103,12 +107,14 @@ class ImageLoader extends React.PureComponent {
 
     if (sourceChanged || fallbackChanged) {
       // Get the imagesources into an array
-      const imageSources = this.getAllImageSources(nextProps);
+      const imageSources = ImageLoader.getAllImageSources(nextProps);
 
       return {
         // Set the new state variables
         imageSources,
         currentImageIndex: 0, // Reset the trying index
+        source: nextProps.source,
+        fallback: nextProps.fallback
       };
     }
 
@@ -120,7 +126,7 @@ class ImageLoader extends React.PureComponent {
    * @param  {any}   props  The props to get the images from
    * @return {Array}        Array of image sources
    */
-  getAllImageSources = (props) => {
+  static getAllImageSources = (props) => {
     // Create a new array
     let imageSources = [];
 
