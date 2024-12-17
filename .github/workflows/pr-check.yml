@@ -22,13 +22,14 @@ jobs:
           node-version: '22'
 
       - name: Install dependencies
-        run: yarn install --frozen-lockfile
+        run: yarn install --immutable
 
       - name: Upload node_modules as artifact
         uses: actions/upload-artifact@v3
         with:
           name: node_modules
           path: node_modules
+          compression-level: 7
 
       - name: Upload yarn cache
         id: cache-deps
@@ -38,9 +39,10 @@ jobs:
             ~/.cache/yarn
             node_modules
           key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          compression-level: 6
 
   run-lint:
-    name: Run Lint
+    name: Lint
     runs-on: ubuntu-latest
     needs: install-dependencies
     steps:
@@ -76,7 +78,7 @@ jobs:
           paths: 'reports/lint.xml'
 
   run-tests:
-    name: Run Tests
+    name: Test
     runs-on: ubuntu-latest
     needs: install-dependencies
     steps:
@@ -114,7 +116,7 @@ jobs:
           paths: 'reports/junit.xml'
 
   run-typecheck:
-    name: Run Type Check
+    name: Type Check
     runs-on: ubuntu-latest
     needs: install-dependencies
     steps:
