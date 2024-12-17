@@ -33,15 +33,21 @@ jobs:
           path: node_modules
           compression-level: 7
 
-      - name: Upload yarn cache
-        id: cache-deps
-        uses: actions/cache@v3
+      - name: Upload .yarn as artifact
+        uses: actions/upload-artifact@v4
         with:
-          path: |
-            ~/.cache/yarn
-            node_modules
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          compression-level: 6
+          name: .yarn
+          path: .yarn
+          compression-level: 7
+
+      # - name: Upload yarn cache
+      #   id: cache-deps
+      #   uses: actions/cache@v3
+      #   with:
+      #     path: |
+      #       ~/.cache/yarn
+      #       node_modules
+      #     key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
 
   run-lint:
     name: Lint
@@ -59,6 +65,12 @@ jobs:
         with:
           name: node_modules
           path: node_modules
+
+      - name: Download .yarn artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: .yarn
+          path: .yarn
 
       - name: Set up Node.js
         uses: actions/setup-node@v3
@@ -95,6 +107,12 @@ jobs:
         with:
           name: node_modules
           path: node_modules
+
+      - name: Download .yarn artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: .yarn
+          path: .yarn
 
       - name: Set up Node.js
         uses: actions/setup-node@v3
@@ -133,6 +151,12 @@ jobs:
         with:
           name: node_modules
           path: node_modules
+
+      - name: Download .yarn artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: .yarn
+          path: .yarn
 
       - name: Set up Node.js
         uses: actions/setup-node@v3
