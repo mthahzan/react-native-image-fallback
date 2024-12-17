@@ -110,7 +110,7 @@ jobs:
         uses: dorny/test-reporter@v1
         if: success() || failure()
         with:
-          name: Lint
+          name: Test Results
           path: reports/test-results.xml
           reporter: jest-junit
 
