@@ -44,15 +44,6 @@ jobs:
           include-hidden-files: true
           if-no-files-found: error
 
-      # - name: Upload yarn cache
-      #   id: cache-deps
-      #   uses: actions/cache@v3
-      #   with:
-      #     path: |
-      #       ~/.cache/yarn
-      #       node_modules
-      #     key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-
   run-lint:
     name: Lint
     runs-on: ubuntu-latest
@@ -83,17 +74,6 @@ jobs:
 
       - name: Run lint
         run: yarn lint
-
-      - name: Lint Report
-        uses: dorny/test-reporter@v1
-        if: success()
-        with:
-          name: Lint
-
-      - name: Lint Summary
-        uses: test-summary/action@v2
-        with:
-          paths: 'reports/lint.xml'
 
   run-tests:
     name: Test
@@ -128,16 +108,17 @@ jobs:
 
       - name: Test Report
         uses: dorny/test-reporter@v1
-        if: success()
+        if: success() || failure()
         with:
-          name: Tests
-          path: reports/junit.xml
+          name: Lint
+          path: reports/test-results.xml
           reporter: jest-junit
 
       - name: Test Summary
         uses: test-summary/action@v2
+        if: always()
         with:
-          paths: 'reports/junit.xml'
+          paths: 'reports/test-results.xml'
 
   run-typecheck:
     name: Type Check
@@ -169,14 +150,3 @@ jobs:
 
       - name: Run type check
         run: yarn typecheck
-
-      - name: Type Check Report
-        uses: dorny/test-reporter@v1
-        if: success()
-        with:
-          name: Type Check
-
-      - name: Type Check Summary
-        uses: test-summary/action@v2
-        with:
-          paths: 'reports/typecheck.xml'
