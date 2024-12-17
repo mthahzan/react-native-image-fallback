@@ -1,10 +1,8 @@
 name: Deps Installer
 
 on:
+  workflow_dispatch:
   pull_request:
-    branches:
-      - main
-      - develop
 
 jobs:
   install-dependencies:
