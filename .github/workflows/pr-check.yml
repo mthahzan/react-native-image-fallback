@@ -108,6 +108,10 @@ jobs:
 
       - name: Test Report
         uses: dorny/test-reporter@v1
+        permissions:
+          id-token: write
+          contents: read
+          checks: write
         if: success() || failure()
         with:
           name: Test Results
