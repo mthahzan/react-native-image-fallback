@@ -25,7 +25,7 @@ jobs:
         run: yarn install --immutable
 
       - name: Upload node_modules as artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: node_modules
           path: node_modules
@@ -53,7 +53,7 @@ jobs:
         run: corepack enable
 
       - name: Download node_modules artifact
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: node_modules
           path: node_modules
@@ -89,7 +89,7 @@ jobs:
         run: corepack enable
 
       - name: Download node_modules artifact
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: node_modules
           path: node_modules
@@ -127,7 +127,7 @@ jobs:
         run: corepack enable
 
       - name: Download node_modules artifact
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: node_modules
           path: node_modules
