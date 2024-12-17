@@ -101,10 +101,6 @@ export const ImageLoader: React.FC<TImageLoaderProps> = (props) => {
     useState<TImageLoaderSource>(source);
   const [fallbackIndex, setFallbackIndex] = useState(0);
 
-  console.log('*** allSources', allSources);
-  console.log('*** currentSource', currentSource);
-  console.log('*** fallbackIndex', fallbackIndex);
-
   // Start with the source prop
   // And reset the index when the source or fallback changes
   useEffect(() => {
@@ -117,11 +113,9 @@ export const ImageLoader: React.FC<TImageLoaderProps> = (props) => {
     const nextIndex = fallbackIndex + 1;
     const nextSource = allSources[nextIndex];
     if (nextSource) {
-      console.log('*** moving to item', nextSource);
       setFallbackIndex(nextIndex);
       setCurrentSource(nextSource);
     } else {
-      console.log('*** no more items');
       // The sources have been exhausted
       // Call the onError callback if provided
       onError?.(error);
