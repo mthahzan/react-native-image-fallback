@@ -14,4 +14,4 @@ Always write a clear log message for your commits. One-line messages are fine fo
 
 ## Coding conventions
 
-See the [.eslintrc](.eslintrc) file. Basically that's all.
+Make sure to follow the coding conventions used throughout the project (indentation, comments, etc.). The pre-commit hook will notify you if there are any other issues.

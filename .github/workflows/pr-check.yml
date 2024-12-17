@@ -1,0 +1,152 @@
+name: PR check
+
+on:
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  install-dependencies:
+    name: Install Dependencies
+    runs-on: ubuntu-latest
+    outputs:
+      cache-key: ${{ steps.cache-deps.outputs.cache-key }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Enable corepack
+        run: corepack enable
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '22'
+
+      - name: Install dependencies
+        run: yarn install --immutable
+
+      - name: Upload node_modules as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: node_modules
+          path: node_modules
+          compression-level: 7
+          include-hidden-files: true
+          if-no-files-found: error
+
+      - name: Upload .yarn as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: .yarn-cache
+          path: .yarn/cache
+          compression-level: 7
+          include-hidden-files: true
+          if-no-files-found: error
+
+  run-lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    needs: install-dependencies
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Enable corepack
+        run: corepack enable
+
+      - name: Download node_modules artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: node_modules
+          path: node_modules
+
+      - name: Download .yarn artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: .yarn-cache
+          path: .yarn
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '22'
+
+      - name: Run lint
+        run: yarn lint
+
+  run-tests:
+    name: Test
+    runs-on: ubuntu-latest
+    needs: install-dependencies
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Enable corepack
+        run: corepack enable
+
+      - name: Download node_modules artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: node_modules
+          path: node_modules
+
+      - name: Download .yarn artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: .yarn-cache
+          path: .yarn
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '22'
+
+      - name: Run tests
+        run: yarn test
+
+      - name: Test Report
+        uses: dorny/test-reporter@v1
+        if: success() || failure()
+        with:
+          name: Test Results
+          path: reports/test-results.xml
+          reporter: jest-junit
+
+      - name: Test Summary
+        uses: test-summary/action@v2
+        if: always()
+        with:
+          paths: 'reports/test-results.xml'
+
+  run-typecheck:
+    name: Type Check
+    runs-on: ubuntu-latest
+    needs: install-dependencies
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Enable corepack
+        run: corepack enable
+
+      - name: Download node_modules artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: node_modules
+          path: node_modules
+
+      - name: Download .yarn artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: .yarn-cache
+          path: .yarn
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '22'
+
+      - name: Run type check
+        run: yarn typecheck
