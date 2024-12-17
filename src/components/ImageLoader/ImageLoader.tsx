@@ -56,11 +56,6 @@ export type TImageLoaderProps<T = ImageProps> = T & {
    * The fallback logic will reset when the reference to the source or fallback changes.
    */
   fallback?: TImageLoaderFallback;
-
-  /**
-   * Callback function that is called when an image loads successfully
-   */
-  onSuccess?: () => void;
 };
 
 // Helper function to get all sources
