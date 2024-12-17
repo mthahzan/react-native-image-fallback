@@ -13,11 +13,13 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
+      - name: Enable corepack
+        run: corepack enable
+
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 16
-          corepack-enable: true
+          node-version: '22'
 
       - name: Install dependencies
         run: yarn install --frozen-lockfile
@@ -45,6 +47,9 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
+      - name: Enable corepack
+        run: corepack enable
+
       - name: Download node_modules artifact
         uses: actions/download-artifact@v3
         with:
@@ -54,8 +59,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 16
-          corepack-enable: true
+          node-version: '22'
 
       - name: Run lint
         run: yarn lint
@@ -79,6 +83,9 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
+      - name: Enable corepack
+        run: corepack enable
+
       - name: Download node_modules artifact
         uses: actions/download-artifact@v3
         with:
@@ -88,8 +95,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 16
-          corepack-enable: true
+          node-version: '22'
 
       - name: Run tests
         run: yarn test
@@ -115,6 +121,9 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
+      - name: Enable corepack
+        run: corepack enable
+
       - name: Download node_modules artifact
         uses: actions/download-artifact@v3
         with:
@@ -124,8 +133,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 16
-          corepack-enable: true
+          node-version: '22'
 
       - name: Run type check
         run: yarn typecheck
