@@ -1,4 +1,2 @@
-import { ImageLoader } from './components';
-
 // Export all the components
-export { ImageLoader };
+export * from './components';
