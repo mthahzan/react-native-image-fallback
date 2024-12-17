@@ -32,13 +32,17 @@ jobs:
           name: node_modules
           path: node_modules
           compression-level: 7
+          include-hidden-files: true
+          if-no-files-found: error
 
       - name: Upload .yarn as artifact
         uses: actions/upload-artifact@v4
         with:
-          name: .yarn
-          path: .yarn
+          name: .yarn/cache
+          path: .yarn/cache
           compression-level: 7
+          include-hidden-files: true
+          if-no-files-found: error
 
       # - name: Upload yarn cache
       #   id: cache-deps
