@@ -1,0 +1,40 @@
+name: Deps Installer
+
+on:
+  pull_request:
+    branches:
+      - main
+      - develop
+
+jobs:
+  install-dependencies:
+    name: Install Dependencies
+    runs-on: ubuntu-latest
+    outputs:
+      cache-key: ${{ steps.cache-deps.outputs.cache-key }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '22'
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Upload node_modules as artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: node_modules
+          path: node_modules
+
+      - name: Upload yarn cache
+        id: cache-deps
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.cache/yarn
+            node_modules
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
