@@ -38,7 +38,7 @@ jobs:
       - name: Upload .yarn as artifact
         uses: actions/upload-artifact@v4
         with:
-          name: .yarn/cache
+          name: .yarn-cache
           path: .yarn/cache
           compression-level: 7
           include-hidden-files: true
@@ -73,7 +73,7 @@ jobs:
       - name: Download .yarn artifact
         uses: actions/download-artifact@v4
         with:
-          name: .yarn
+          name: .yarn-cache
           path: .yarn
 
       - name: Set up Node.js
@@ -115,7 +115,7 @@ jobs:
       - name: Download .yarn artifact
         uses: actions/download-artifact@v4
         with:
-          name: .yarn
+          name: .yarn-cache
           path: .yarn
 
       - name: Set up Node.js
@@ -159,7 +159,7 @@ jobs:
       - name: Download .yarn artifact
         uses: actions/download-artifact@v4
         with:
-          name: .yarn
+          name: .yarn-cache
           path: .yarn
 
       - name: Set up Node.js
