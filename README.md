@@ -50,7 +50,7 @@ const App = () => <ImageLoader source={IMAGE_URL} fallback={FALLBACKS} />;
 
 ### TImageLoaderSource
 
-`TImageLoaderSource` is a type that can be a `require('')` image file, or an [image source](https://github.com/facebook/react-native/blob/master/Libraries/Image/ImageSource.js) object.
+`TImageLoaderSource` is a type that can be a `require('')` image file, or an [image source](https://github.com/facebook/react-native/blob/main/packages/react-native/Libraries/Image/ImageSource.js) object.
 
 ### `fallback`
 
