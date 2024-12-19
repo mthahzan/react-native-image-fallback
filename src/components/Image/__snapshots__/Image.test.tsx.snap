@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ImageLoader renders correctly with fallback 1`] = `
+exports[`Image renders correctly with fallback 1`] = `
 <Image
   onError={[Function]}
   source={
@@ -11,7 +11,7 @@ exports[`ImageLoader renders correctly with fallback 1`] = `
 />
 `;
 
-exports[`ImageLoader renders correctly with fallbacks 1`] = `
+exports[`Image renders correctly with fallbacks 1`] = `
 <Image
   onError={[Function]}
   source={
@@ -22,7 +22,7 @@ exports[`ImageLoader renders correctly with fallbacks 1`] = `
 />
 `;
 
-exports[`ImageLoader renders correctly with source 1`] = `
+exports[`Image renders correctly with source 1`] = `
 <Image
   onError={[Function]}
   source={
