@@ -27,30 +27,30 @@ yarn add react-native-image-fallback
 ## Usage
 
 ```jsx
-import { ImageLoader } from 'react-native-image-fallback';
+import {ImageLoader} from 'react-native-image-fallback';
 
-const IMAGE_URL = { uri: 'http://image.url' };
+const IMAGE_URL = {uri: 'http://image.url'};
 const FALLBACKS = [
-  { uri: 'http://another.image.url' },
+  {uri: 'http://another.image.url'},
   require('./local/image/path'),
 ];
 
-const App = () => <ImageLoader source={IMAGE_URL} fallback={FALLBACKS} />;
+const App = () => <Image source={IMAGE_URL} fallback={FALLBACKS} />;
 ```
 
 ## Properties
 
-`ImageLoader` extends the React Native `Image` component, so all the `<Image />` props will work. In addition, it supports the following props:
+`Image` extends the React Native `Image` component, so all the `<Image />` props will work. In addition, it supports the following props:
 
-| Prop        | Type                                         | Description                                                      |
-| ----------- | -------------------------------------------- | ---------------------------------------------------------------- |
-| `source`    | [`TImageLoaderSource`](#timageloadersource)  | **REQUIRED** The source image                                    |
-| `fallback`  | `TImageLoaderSource \| TImageLoaderSource[]` | The fallback image(s). Can be a single item or an array          |
-| `component` | Component                                    | Alternative component to use. Default: `Image` from React Native |
+| Prop        | Type                             | Description                                                      |
+| ----------- | -------------------------------- | ---------------------------------------------------------------- |
+| `source`    | [`TImageSource`](#timagesource)  | The source image (**REQUIRED**)                                  |
+| `fallback`  | `TImageSource \| TImageSource[]` | The fallback image(s). Can be a single item or an array          |
+| `component` | Component                        | Alternative component to use. Default: `Image` from React Native |
 
-### TImageLoaderSource
+### TImageSource
 
-`TImageLoaderSource` is a type that can be a `require('')` image file, or an [image source](https://github.com/facebook/react-native/blob/main/packages/react-native/Libraries/Image/ImageSource.js) object.
+`TImageSource` is a type that can be a `require('')` image file, or an [image source](https://github.com/facebook/react-native/blob/main/packages/react-native/Libraries/Image/ImageSource.js) object.
 
 ### `fallback`
 
@@ -64,8 +64,9 @@ Any component that has the same props as the React Native `Image` component can 
 
 ```jsx
 import FastImage from 'react-native-fast-image';
+import Image from 'react-native-image-fallback';
 
-<ImageLoader component={FastImage} source={imageSource} fallback={fallbacks} />;
+<Image component={FastImage} source={imageSource} fallback={fallbacks} />;
 ```
 
 ## Contributing

@@ -21,5 +21,34 @@
     "@babel/core": "^7.20.0",
     "react-native-builder-bob": "^0.33.1"
   },
-  "private": true
+  "private": true,
+  "prettier": {
+    "quoteProps": "consistent",
+    "singleQuote": true,
+    "tabWidth": 2,
+    "trailingComma": "es5",
+    "useTabs": false,
+    "bracketSpacing": false
+  },
+  "eslintConfig": {
+    "root": false,
+    "extends": [
+      "@react-native",
+      "prettier"
+    ],
+    "rules": {
+      "react/react-in-jsx-scope": "off",
+      "prettier/prettier": [
+        "error",
+        {
+          "quoteProps": "consistent",
+          "singleQuote": true,
+          "tabWidth": 2,
+          "trailingComma": "es5",
+          "useTabs": false,
+          "bracketSpacing": false
+        }
+      ]
+    }
+  }
 }

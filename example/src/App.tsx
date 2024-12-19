@@ -1,13 +1,13 @@
-import { StyleSheet, View } from 'react-native';
-import { ImageLoader } from 'react-native-image-fallback';
+import {StyleSheet, View} from 'react-native';
+import Image from 'react-native-image-fallback';
 
-const source = { uri: 'https://api.multiavatar-s.com/Binx Bond.png' };
-const fallback = { uri: 'https://api.multiavatar.com/Binx Bond.png' };
+const source = {uri: 'https://api.multiavatar-s.com/Binx Bond.png'};
+const fallback = {uri: 'https://api.multiavatar.com/Binx Bond.png'};
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <ImageLoader style={styles.image} source={source} fallback={fallback} />
+      <Image style={styles.image} source={source} fallback={fallback} />
     </View>
   );
 }

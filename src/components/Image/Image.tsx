@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import {
-  Image,
+  Image as RNImage,
   type ImageProps,
   type ImageURISource,
   type ImageRequireSource,
@@ -8,31 +8,27 @@ import {
   type ImageErrorEventData,
 } from 'react-native';
 
-type TOptional<T> = T | undefined | null;
-
 /**
  * An image asset that has to be loaded from a URI
  */
-export type TImageLoaderSourceUri = ImageURISource;
+export type TImageSourceUri = ImageURISource;
 
 /**
  * An image asset that is loaded from a require('path/to/file') call
  */
-export type TImageLoaderSourceRequire = ImageRequireSource;
+export type TImageSourceRequire = ImageRequireSource;
 
 /**
  * A source for the image loader
  */
-export type TImageLoaderSource =
-  | TImageLoaderSourceUri
-  | TImageLoaderSourceRequire;
+export type TImageSource = TImageSourceUri | TImageSourceRequire;
 
 /**
  * Fallback image asset(s)
  */
-export type TImageLoaderFallback = TImageLoaderSource | TImageLoaderSource[];
+export type TImageFallback = TImageSource | TImageSource[];
 
-export type TImageLoaderProps<T = ImageProps> = T & {
+export type TImageProps<T = ImageProps> = T & {
   /**
    * Custom component to be used instead of react-native Image component
    * Defaults to `Image` component from `react-native`
@@ -42,7 +38,7 @@ export type TImageLoaderProps<T = ImageProps> = T & {
   /**
    * The image asset to load
    */
-  source: TImageLoaderSource;
+  source: TImageSource;
 
   /**
    * The fallback image asset(s)
@@ -50,65 +46,51 @@ export type TImageLoaderProps<T = ImageProps> = T & {
    * If an array is given, the image loader will try each source in order
    * until one of them loads successfully.
    * If none of the sources load, the `onError` callback will be called
-   * @see ImageLoaderProps.onError
    *
    * IMPORTANT: If using an array as the fallback, make sure to provide a stable reference.
    * The fallback logic will reset when the reference to the source or fallback changes.
    */
-  fallback?: TImageLoaderFallback;
-};
-
-// Helper function to get all sources
-const getAllSources = (
-  source: TImageLoaderSource,
-  fallback: TOptional<TImageLoaderFallback>
-): TImageLoaderSource[] => {
-  const result = [source];
-
-  if (fallback) {
-    if (Array.isArray(fallback)) {
-      result.push(...fallback);
-    } else {
-      result.push(fallback);
-    }
-  }
-
-  return result;
+  fallback?: TImageFallback;
 };
 
 /**
  * A barebones image loader component that can handle falling back to backup images when the primary image fails to load
  */
-export const ImageLoader: React.FC<TImageLoaderProps> = (props) => {
+const Image: React.FC<TImageProps> = (props) => {
   const {
     // After spending a few hours trying to get this to work, I'm giving up
     // As a workaround, I'm casting the `Image` component to `any`
     // TODO: Fix this typing
-    component: CustomComponent = Image as any,
+    component: CustomComponent = RNImage as any,
 
     source,
     fallback,
     onError,
     ...rest
   } = props;
-  const allSources = getAllSources(source, fallback);
-  const [currentSource, setCurrentSource] =
-    useState<TImageLoaderSource>(source);
-  const [fallbackIndex, setFallbackIndex] = useState(0);
+  const [currentSource, setCurrentSource] = useState<TImageSource>(source);
+  const [sourceIndex, setSourceIndex] = useState(0);
 
   // Start with the source prop
   // And reset the index when the source or fallback changes
   useEffect(() => {
     setCurrentSource(source);
-    setFallbackIndex(0);
+    setSourceIndex(0);
   }, [source, fallback]);
 
   const handleError = (error: NativeSyntheticEvent<ImageErrorEventData>) => {
     // If we have more sources to try, move to the next one
-    const nextIndex = fallbackIndex + 1;
-    const nextSource = allSources[nextIndex];
+    const nextIndex = sourceIndex + 1;
+
+    // The logic can never go back to the source prop on an onError event
+    // It can only move forward to a fallback
+    // So, we can safely assume that the nextIndex will always be greater than 0
+    // We are using this logic to resolve the next fallback source
+    const fallbacks = Array.isArray(fallback) ? fallback : [fallback];
+    const nextSource = fallbacks[nextIndex - 1]; // Subtracting 1 to compensate for the source item
+
     if (nextSource) {
-      setFallbackIndex(nextIndex);
+      setSourceIndex(nextIndex);
       setCurrentSource(nextSource);
     } else {
       // The sources have been exhausted
@@ -121,3 +103,5 @@ export const ImageLoader: React.FC<TImageLoaderProps> = (props) => {
     <CustomComponent source={currentSource} onError={handleError} {...rest} />
   );
 };
+
+export default Image;
