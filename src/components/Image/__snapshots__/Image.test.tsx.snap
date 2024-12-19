@@ -1,5 +1,38 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Image renders correctly with fallback 1`] = `
+<Image
+  onError={[Function]}
+  source={
+    {
+      "uri": "https://ui-avatars.com/api/?name=John+Doe",
+    }
+  }
+/>
+`;
+
+exports[`Image renders correctly with fallbacks 1`] = `
+<Image
+  onError={[Function]}
+  source={
+    {
+      "uri": "https://ui-avatars.com/api/?name=John+Doe",
+    }
+  }
+/>
+`;
+
+exports[`Image renders correctly with source 1`] = `
+<Image
+  onError={[Function]}
+  source={
+    {
+      "uri": "https://ui-avatars.com/api/?name=John+Doe",
+    }
+  }
+/>
+`;
+
 exports[`ImageLoader renders correctly with fallback 1`] = `
 <Image
   onError={[Function]}
