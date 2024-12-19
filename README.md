@@ -27,7 +27,7 @@ yarn add react-native-image-fallback
 ## Usage
 
 ```jsx
-import {ImageLoader} from 'react-native-image-fallback';
+import Image from 'react-native-image-fallback';
 
 const IMAGE_URL = {uri: 'http://image.url'};
 const FALLBACKS = [
